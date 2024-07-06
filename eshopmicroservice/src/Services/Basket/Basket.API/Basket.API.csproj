@@ -13,6 +13,7 @@
   <ItemGroup>
     <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="8.0.1" />
     <PackageReference Include="AspNetCore.HealthChecks.Redis" Version="8.0.1" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.49.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.6" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.6" />
   </ItemGroup>
@@ -23,6 +24,12 @@
 	  <PackageReference Include="Marten" Version="6.4.1" />
 	  <PackageReference Include="Scrutor" Version="4.2.2" />
     <ProjectReference Include="..\..\..\BuildingBlocks\BuildingBlocks\BuildingBlocks.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="..\..\Discount\Discount.Grpc\Protos\diccount.proto" GrpcServices="Client">
+      <Link>Protos\diccount.proto</Link>
+    </Protobuf>
   </ItemGroup>
 
 </Project>

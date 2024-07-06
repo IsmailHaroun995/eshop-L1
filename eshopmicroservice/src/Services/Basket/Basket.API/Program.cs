@@ -1,4 +1,5 @@
 using BuildingBlocks.ValidationBehavior;
+using Discount.Grpc;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add Services to the container
@@ -21,6 +22,19 @@ builder.Services.Decorate<IBasketRepository,CachedBasketRepository>();
 builder.Services.AddStackExchangeRedisCache(options =>
 {
     options.Configuration = builder.Configuration.GetConnectionString("Redis");
+});
+//grpc services
+builder.Services.AddGrpcClient<DiscountProtoServoce.DiscountProtoServoceClient>(options =>
+{
+    options.Address = new Uri(builder.Configuration["Grpc:serviceURL"]!);
+}).ConfigurePrimaryHttpMessageHandler(() =>
+{
+    var handler = new HttpClientHandler
+    {
+        ServerCertificateCustomValidationCallback = 
+        HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+    };
+    return handler;
 });
 
 var app = builder.Build();
